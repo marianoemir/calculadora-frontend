@@ -86,7 +86,7 @@
       margin-bottom: .4rem;
     }
 
-    .operaciones { display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; }
+    .operaciones { display: grid; grid-template-columns: repeat(5, 1fr); gap: .6rem; }
 
     /* Los radios reales quedan invisibles pero SIGUEN EXISTIENDO y siguen
        siendo accesibles: se navegan con flechas y los lee un lector de
@@ -317,6 +317,18 @@
     @media (max-width: 480px) {
       .fila-operandos { grid-template-columns: 1fr; }
       .operaciones { grid-template-columns: repeat(2, 1fr); }
+      /* Con 5 botones en 2 columnas, el 5to queda solo en su fila.
+         Ocupa todo el ancho de la fila pero se angosta y centra para
+         medir lo mismo que sus hermanos. Solo existe #op-pot cuando
+         está el quinto botón, así que con 4 botones esta regla no
+         matchea nada y no los afecta. Desktop tampoco: vive dentro
+         del media query. */
+      .operaciones #op-pot + label {
+        grid-column: 1 / -1;
+        justify-self: center;
+        width: 100%;
+        max-width: calc(50% - .3rem);
+      }
     }
   </style>
 </head>
@@ -346,7 +358,7 @@
           </div>
         </div>
 
-        <!-- Radios y no botones sueltos: la operación es UNA sola entre cuatro
+        <!-- Radios y no botones sueltos: la operación es UNA sola entre cinco
              opciones mutuamente excluyentes. Ese es exactamente el input que
              inventaron los radio buttons. Además el navegador garantiza solo
              que nunca haya dos seleccionadas — no escribís código para eso.
@@ -367,6 +379,9 @@
 
             <input type="radio" id="op-div" name="operacion" value="division">
             <label for="op-div"><span class="simbolo">÷</span>División</label>
+
+            <input type="radio" id="op-pot" name="operacion" value="potencia">
+            <label for="op-pot"><span class="simbolo">x²</span>Potencia</label>
           </div>
         </fieldset>
 
